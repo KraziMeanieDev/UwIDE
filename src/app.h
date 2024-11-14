@@ -4,6 +4,7 @@
 
 #include <QMainWindow>
 #include <QPushButton>
+#include <QTextEdit>
 
 class AppWindow : public QMainWindow {
   Q_OBJECT
@@ -12,10 +13,13 @@ public:
   AppWindow(QWidget *parent = nullptr);
 
 private slots:
-  void onButtonClicked(); // Slot for button click
+  void newFile();
+  void openFile();
+  void saveFile();
 
 private:
-  QPushButton *button; // Button member
+  QTextEdit *editor;
+  void createMenuBar();
 };
 
 #endif // APPWINDOW_H
