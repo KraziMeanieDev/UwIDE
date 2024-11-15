@@ -7,8 +7,6 @@ EditorWindow::EditorWindow(QWidget *parent) {
   editorWidget = new EditorWidget(this); // Initialize the new EditorWidget
   setCentralWidget(
       editorWidget); // Set it as the central widget for EditorWindow
-
-  qDebug() << "EditorWindow has been created";
 }
 
 void EditorWindow::newFile() {

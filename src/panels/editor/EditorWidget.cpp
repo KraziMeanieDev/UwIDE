@@ -1,17 +1,13 @@
 #include "EditorWidget.h"
 
 EditorWidget::EditorWidget(QWidget *parent) : QWidget(parent) {
-  editor = new QTextEdit(this);
+  editor = new QPlainTextEdit(this);
 
   // Create a layout and add the QTextEdit widget to it
   layout = new QVBoxLayout(this);
   layout->addWidget(editor);
 
   setLayout(layout); // Set the layout for the widget
-
-  editor->setFocus();
-
-  qDebug() << "EditorWidget has been created";
 }
 
 QString EditorWidget::getText() const { return editor->toPlainText(); }

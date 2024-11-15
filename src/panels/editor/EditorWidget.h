@@ -1,7 +1,7 @@
 #ifndef EDITORWIDGET_H
 #define EDITORWIDGET_H
 
-#include <QTextEdit>
+#include <QPlainTextEdit>
 #include <QVBoxLayout>
 #include <QWidget>
 
@@ -17,7 +17,7 @@ public:
   bool isEmpty() const;
 
 private:
-  QTextEdit *editor;
+  QPlainTextEdit *editor;
   QVBoxLayout *layout;
 };
 
