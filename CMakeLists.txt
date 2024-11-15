@@ -14,12 +14,16 @@ find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
 # Define the source files
 set(SOURCES
     src/main.cpp
-    src/app.cpp
+    src/AppWindow.cpp
+    src/panels/editor/EditorWidget.cpp
+    src/panels/editor/EditorWindow.cpp
 )
 
 # Define the header files
 set(HEADERS
-    src/app.h
+    src/AppWindow.h
+    src/panels/editor/EditorWidget.h
+    src/panels/editor/EditorWindow.h
 )
 
 # Add component-specific sources (like custom UI components)

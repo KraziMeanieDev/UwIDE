@@ -1,25 +1,25 @@
-// MainWindow.h
 #ifndef APPWINDOW_H
 #define APPWINDOW_H
 
+#include "panels/editor/EditorWindow.h"
 #include <QMainWindow>
-#include <QPushButton>
-#include <QTextEdit>
+
 
 class AppWindow : public QMainWindow {
   Q_OBJECT
 
 public:
-  AppWindow(QWidget *parent = nullptr);
+  explicit AppWindow(QWidget *parent = nullptr);
 
 private slots:
   void newFile();
   void openFile();
   void saveFile();
+  void handleFileError(const QString &error);
 
 private:
-  QTextEdit *editor;
   void createMenuBar();
+  EditorWindow *editorWindow;
 };
 
 #endif // APPWINDOW_H
