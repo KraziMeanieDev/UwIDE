@@ -1,12 +1,15 @@
-#include "AppWindow.h"
-#include <QApplication>
-#include <QPushButton>
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
+#include <QQmlContext>
 
 int main(int argc, char *argv[]) {
-  QApplication app(argc, argv);
+  QGuiApplication app(argc, argv);
 
-  AppWindow window;
-  window.show();
+  QQmlApplicationEngine engine;
+  engine.load(QUrl(QStringLiteral("main.qml")));
+
+  if (engine.rootObjects().isEmpty())
+    return -1;
 
   return app.exec();
 }
