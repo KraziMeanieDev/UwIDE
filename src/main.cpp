@@ -6,7 +6,7 @@ int main(int argc, char *argv[]) {
 
   QQmlApplicationEngine engine;
   using namespace Qt::StringLiterals;
-  const QUrl url(u"qrc:/Uwide/main.qml"_s);
+  const QUrl url(u"qrc:/src/main.qml"_s);
   QObject::connect(
       &engine, &QQmlApplicationEngine::objectCreated, &app,
       [url](QObject *obj, const QUrl &objUrl) {

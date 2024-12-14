@@ -3,6 +3,7 @@ build/
 cmake-build-*/
 out/
 _build/
+.cache
 
 # Qt Creator user-specific settings
 *.user
