@@ -2,5 +2,7 @@
     <qresource prefix="/">
         <file>src/main.qml</file>
         <file>src/qml/pages/WelcomePage.qml</file>
+        <file>src/qml/components/SidePanel.qml</file>
+        <file>src/qml/components/MenuBar.qml</file>
     </qresource>
 </RCC>
