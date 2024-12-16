@@ -22,10 +22,24 @@ find_package(Qt6 COMPONENTS Quick REQUIRED)
 # Standard Qt project setup
 qt_standard_project_setup()
 
+# List of source files
+set(SOURCES
+    src/main.cpp
+    src/core/Explorer.cpp
+    src/core/MenuController.cpp
+)
+
+# List of header files
+set(HEADERS
+    src/core/Explorer.h
+    src/core/MenuController.h
+)
+
 # Define the executable
 qt_add_executable(Uwide
     main.qrc
-    src/main.cpp
+    ${SOURCES}
+    ${HEADERS} 
 )
 
 # qt_policy(SET QTP0001 OLD)
