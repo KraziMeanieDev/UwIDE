@@ -40,6 +40,12 @@ MenuBar {
             text: qsTr("&Open...")
         }
         Action {
+            text: qsTr("&Open Folder...")
+            onTriggered: {
+                folderDialog.open();
+            }
+        }
+        Action {
             text: qsTr("&Save")
         }
         Action {

@@ -1,6 +1,7 @@
 pragma ComponentBehavior: Bound
 import QtQuick
-import QtQuick.Controls.Fusion
+import QtQuick.Controls.Fusion 2.15
+import QtQuick.Dialogs
 import QtQuick.Window
 import "./qml/components"
 
@@ -29,6 +30,17 @@ ApplicationWindow {
 
     menuBar: MenuBar {}
 
+    FolderDialog {
+        id: folderDialog
+        title: "Open Folder"
+        currentFolder: ""
+        onAccepted: {
+            console.log("Selected folder:", folderDialog.selectedFolder);
+            explorer.browseFolder(folderDialog.selectedFolder);
+            console.log("Folder contents:", explorer.folderContents);
+        }
+    }
+
     SplitView {
         anchors.margins: 5
         anchors.topMargin: 0
@@ -44,13 +56,7 @@ ApplicationWindow {
             }
         }
 
-        SidePanel {
-            Text {
-                text: "Explorer Panel"
-                anchors.centerIn: parent
-                color: "#cfcfcf"
-            }
-        }
+        SidePanel {}
 
         SplitView {
             orientation: Qt.Vertical
