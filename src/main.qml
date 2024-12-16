@@ -1,9 +1,11 @@
 pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Controls.Fusion
+import QtQuick.Window
 import "./qml/components"
 
 ApplicationWindow {
+    id: mainWindow
     visible: true
     width: 1280
     height: 720
@@ -11,6 +13,19 @@ ApplicationWindow {
     minimumHeight: 600
     title: qsTr("Uwide")
     color: "#202020"
+
+    Component.onCompleted: {
+        opacityAnimation.start();
+    }
+
+    PropertyAnimation {
+        id: opacityAnimation
+        target: mainWindow
+        property: "opacity"
+        from: 0
+        to: 1
+        duration: 200
+    }
 
     menuBar: MenuBar {}
 
