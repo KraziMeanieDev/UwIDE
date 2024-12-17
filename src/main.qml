@@ -48,6 +48,10 @@ ApplicationWindow {
         handle: Rectangle {
             implicitWidth: 5
             color: SplitHandle.hovered ? "#c5897d" : "transparent"
+            MouseArea {
+                anchors.fill: parent
+                cursorShape: Qt.SizeHorCursor
+            }
             Behavior on color {
                 ColorAnimation {
                     duration: 500
@@ -69,6 +73,10 @@ ApplicationWindow {
                         duration: 500
                         easing.type: Easing.Linear
                     }
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: Qt.SizeVerCursor
                 }
             }
 
