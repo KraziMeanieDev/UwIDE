@@ -37,7 +37,7 @@ ApplicationWindow {
         onAccepted: {
             console.log("Selected folder:", folderDialog.selectedFolder);
             explorer.browseFolder(folderDialog.selectedFolder);
-            console.log("Folder contents:", explorer.folderContents);
+            console.log("Count:", explorer.folderContents.length);
         }
     }
 
@@ -45,9 +45,10 @@ ApplicationWindow {
         anchors.margins: 5
         anchors.topMargin: 0
         anchors.fill: parent
+        clip: true
         handle: Rectangle {
             implicitWidth: 5
-            color: SplitHandle.hovered ? "#c5897d" : "transparent"
+            color: SplitHandle.hovered ? "#c5897d" : "#202020"
             MouseArea {
                 anchors.fill: parent
                 cursorShape: Qt.SizeHorCursor
@@ -67,7 +68,7 @@ ApplicationWindow {
 
             handle: Rectangle {
                 implicitHeight: 5
-                color: SplitHandle.hovered ? "#c5897d" : "transparent"
+                color: SplitHandle.hovered ? "#c5897d" : "#202020"
                 Behavior on color {
                     ColorAnimation {
                         duration: 500
