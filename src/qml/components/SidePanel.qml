@@ -82,11 +82,21 @@ Rectangle {
                     acceptedDevices: PointerDevice.Mouse
                     cursorShape: Qt.PointingHandCursor
                 }
+                MouseArea {
+                    id: mouseArea
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+
+                    onClicked: {
+                        // Log the path of the clicked item (using modelData)
+                        console.log("Item clicked:", modelData.path);
+                    }
+                }
 
                 Text {
                     anchors.left: parent.left
                     anchors.verticalCenter: parent.verticalCenter
-                    text: modelData
+                    text: modelData.name
                     color: "#cfcfcf"
                     leftPadding: 15
                 }

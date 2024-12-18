@@ -38,6 +38,7 @@ MenuBar {
         }
         Action {
             text: qsTr("&Open...")
+            icon.name: "document-open"
         }
         Action {
             text: qsTr("&Open Folder...")

@@ -1,22 +1,22 @@
 #pragma once
 #include <QDebug>
 #include <QObject>
-#include <QStringList>
+#include <QVariantList>
 
 class Explorer : public QObject {
   Q_OBJECT
-  Q_PROPERTY(QStringList folderContents READ folderContents NOTIFY
+  Q_PROPERTY(QVariantList folderContents READ folderContents NOTIFY
                  folderContentsChanged);
 
 public:
   explicit Explorer(QObject *parent = nullptr);
-  QStringList folderContents() const;
+  QVariantList folderContents() const;
 public slots:
   void browseFolder(const QString &folderPath);
+  void updateFolderContents(const QString &folderPath);
 signals:
   void folderContentsChanged();
 
 private:
-  QStringList m_folderContents;
-  void updateFolderContents(const QString &folderPath);
+  QVariantList m_folderContents;
 };

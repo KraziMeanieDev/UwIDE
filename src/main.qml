@@ -37,7 +37,10 @@ ApplicationWindow {
         onAccepted: {
             console.log("Selected folder:", folderDialog.selectedFolder);
             explorer.browseFolder(folderDialog.selectedFolder);
-            console.log("Count:", explorer.folderContents.length);
+            for (var i = 0; i < explorer.folderContents.length; i++) {
+                var folder = explorer.folderContents[i];
+                console.log("Item " + i + ": Name: " + folder.name + ", Path: " + folder.path);
+            }
         }
     }
 
