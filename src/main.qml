@@ -84,18 +84,7 @@ ApplicationWindow {
                 }
             }
 
-            Rectangle {
-                id: editorPanel
-                SplitView.fillHeight: true
-                radius: 8
-                color: "#2b2b2b"
-                // This is where you would embed your QScintilla or other editor component
-                Text {
-                    text: "Editor Area"
-                    anchors.centerIn: parent
-                    color: "#cfcfcf"
-                }
-            }
+            EditorPanel {}
 
             Rectangle {
                 id: terminal

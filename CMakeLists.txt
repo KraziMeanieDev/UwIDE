@@ -27,12 +27,14 @@ set(SOURCES
     src/main.cpp
     src/core/Explorer.cpp
     src/core/MenuController.cpp
+    src/core/CodeEditor/CodeDocumentModel.cpp
 )
 
 # List of header files
 set(HEADERS
     src/core/Explorer.h
     src/core/MenuController.h
+    src/core/CodeEditor/CodeDocumentModel.h
 )
 
 # Define the executable

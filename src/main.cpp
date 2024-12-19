@@ -1,3 +1,4 @@
+#include "core/CodeEditor/CodeDocumentModel.h"
 #include "core/Explorer.h"
 #include "core/MenuController.h"
 #include <QGuiApplication>
@@ -9,6 +10,7 @@ int main(int argc, char *argv[]) {
 
   MenuController menuController;
   Explorer explorer;
+  CodeDocumentModel codeDocumentModel;
 
   QObject::connect(&menuController, &MenuController::openFolderRequested,
                    &explorer, &Explorer::browseFolder);
@@ -17,6 +19,8 @@ int main(int argc, char *argv[]) {
 
   engine.rootContext()->setContextProperty("menuController", &menuController);
   engine.rootContext()->setContextProperty("explorer", &explorer);
+  engine.rootContext()->setContextProperty("codeDocumentModel",
+                                           &codeDocumentModel);
 
   using namespace Qt::StringLiterals;
   const QUrl url(u"qrc:/src/main.qml"_s);
