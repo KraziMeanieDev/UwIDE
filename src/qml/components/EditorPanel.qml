@@ -7,8 +7,21 @@ Rectangle {
     radius: 8
     color: "#2b2b2b"
 
-    // Add property to cache line count
     property int lineCount: textEdit.text.split('\n').length
+    property int visibleStartLine: Math.floor(flick.contentY / lineHeight)
+    property int visibleEndLine: Math.min(Math.ceil((flick.contentY + flick.height) / lineHeight), lineCount)
+    property real lineHeight: textEdit.font.pixelSize + 4
+
+    Timer {
+        id: lineCountTimer
+        interval: 150
+        repeat: false
+        onTriggered: {
+            editorPanel.lineCount = textEdit.text.split('\n').length
+            lineNumbersCanvas.requestPaint()
+            textEdit.updatesPending = false
+        }
+    }
 
     Flickable {
         id: flick
@@ -16,8 +29,14 @@ Rectangle {
         contentWidth: textEdit.width + lineNumbersArea.width
         contentHeight: textEdit.contentHeight
         boundsBehavior: Flickable.StopAtBounds
+        pixelAligned: true
+        maximumFlickVelocity: 2500
         clip: true
-        ScrollBar.vertical: ScrollBar {}
+        ScrollBar.vertical: ScrollBar {
+            policy: ScrollBar.AsNeeded
+            interactive: true
+            minimumSize: 0.1
+        }
 
         function ensureVisible(r) {
             if (flick.contentX >= r.x)
@@ -36,18 +55,42 @@ Rectangle {
             height: flick.contentHeight
             color: "#232323"
 
-            Repeater {
-                model: editorPanel.lineCount
-                delegate: Text {
-                    y: index * (textEdit.font.pixelSize + 4)
-                    height: textEdit.font.pixelSize + 4
-                    width: lineNumbersArea.width
-                    text: index + 1
-                    color: "#707070"
-                    horizontalAlignment: Text.AlignRight
-                    rightPadding: 4
-                    font.family: textEdit.font.family
-                    font.pixelSize: textEdit.font.pixelSize
+            Canvas {
+                id: lineNumbersCanvas
+                anchors.fill: parent
+                property real lastContentY: 0
+
+                onPaint: {
+                    var ctx = getContext("2d");
+                    ctx.reset();
+                    
+                    ctx.font = textEdit.font.pixelSize + "px '" + textEdit.font.family + "'";
+                    ctx.fillStyle = "#707070";
+                    ctx.textAlign = "right";
+
+                    ctx.beginPath();
+                    for (var i = editorPanel.visibleStartLine; i <= editorPanel.visibleEndLine; i++) {
+                        var y = i * editorPanel.lineHeight;
+                        ctx.fillText(i + 1, width - 4, y + textEdit.font.pixelSize);
+                    }
+                    ctx.fill();
+                    lastContentY = flick.contentY;
+                }
+
+                Connections {
+                    target: flick
+                    function onContentYChanged() {
+                        if (Math.abs(lineNumbersCanvas.lastContentY - flick.contentY) > editorPanel.lineHeight / 2) {
+                            lineNumbersCanvas.requestPaint();
+                        }
+                    }
+                }
+
+                Connections {
+                    target: textEdit
+                    function onTextChanged() {
+                        lineNumbersCanvas.requestPaint();
+                    }
                 }
             }
         }
@@ -64,8 +107,33 @@ Rectangle {
             wrapMode: TextEdit.NoWrap
             clip: true
 
-            onCursorRectangleChanged: flick.ensureVisible(cursorRectangle)
-            onTextChanged: editorPanel.lineCount = text.split('\n').length
+            // Rendering optimizations
+            renderType: Text.NativeRendering
+            antialiasing: false
+            layer.enabled: true
+            layer.smooth: false
+            textFormat: TextEdit.PlainText
+            
+            // Memory optimizations
+            persistentSelection: false
+            selectByMouse: true
+            mouseSelectionMode: TextEdit.SelectWords
+            
+            // Batch updates
+            property bool updatesPending: false
+            
+            onTextChanged: {
+                if (!updatesPending) {
+                    updatesPending = true;
+                    lineCountTimer.restart();
+                }
+            }
+
+            onCursorRectangleChanged: {
+                if (!flick.moving) {
+                    flick.ensureVisible(cursorRectangle);
+                }
+            }
         }
     }
 }
