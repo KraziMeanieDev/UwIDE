@@ -5,7 +5,7 @@ Rectangle {
     id: editorPanel
     SplitView.fillHeight: true
     radius: 8
-    color: "#2b2b2b"
+    color: "#202020"
 
     property int lineCount: textEdit.text.split('\n').length
     property int visibleStartLine: Math.floor(flick.contentY / lineHeight)
@@ -53,7 +53,7 @@ Rectangle {
             id: lineNumbersArea
             width: 40
             height: flick.contentHeight
-            color: "#232323"
+            color: "#1a1a1a"  // Darker background for better contrast
             topLeftRadius: editorPanel.radius
 
             Canvas {
@@ -66,7 +66,7 @@ Rectangle {
                     ctx.reset();
 
                     ctx.font = textEdit.font.pixelSize + "px '" + textEdit.font.family + "'";
-                    ctx.fillStyle = "#707070";
+                    ctx.fillStyle = "#8f8f8f";  // Lighter text for better readability
                     ctx.textAlign = "right";
 
                     ctx.beginPath();
