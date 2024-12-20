@@ -13,7 +13,7 @@ ApplicationWindow {
     minimumWidth: 800
     minimumHeight: 600
     title: qsTr("Uwide")
-    color: "#202020"
+    color: "#181818"
 
     Component.onCompleted: {
         opacityAnimation.start();
@@ -51,7 +51,7 @@ ApplicationWindow {
         clip: true
         handle: Rectangle {
             implicitWidth: 5
-            color: SplitHandle.hovered ? "#c5897d" : "#202020"
+            color: SplitHandle.hovered ? "#c5897d" : "#181818"
             MouseArea {
                 anchors.fill: parent
                 cursorShape: Qt.SizeHorCursor
@@ -71,7 +71,7 @@ ApplicationWindow {
 
             handle: Rectangle {
                 implicitHeight: 5
-                color: SplitHandle.hovered ? "#c5897d" : "#202020"
+                color: SplitHandle.hovered ? "#c5897d" : "#181818"
                 Behavior on color {
                     ColorAnimation {
                         duration: 500
@@ -91,7 +91,7 @@ ApplicationWindow {
                 SplitView.minimumHeight: 200
                 SplitView.maximumHeight: 300
                 radius: 7
-                color: "#2b2b2b"
+                color: "#202020"
                 // This is where you would embed your QScintilla or other editor component
                 Text {
                     text: "Terminal Area"

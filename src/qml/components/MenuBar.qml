@@ -6,7 +6,7 @@ MenuBar {
     padding: 5
     spacing: 10
     background: Rectangle {
-        color: "#202020"
+        color: "#181818"
     }
 
     delegate: MenuBarItem {
@@ -28,7 +28,7 @@ MenuBar {
             radius: 4
             anchors.margins: 10
             opacity: enabled ? 1 : 0.3
-            color: menuBarItem.highlighted ? "#2b2b2b" : "transparent"
+            color: menuBarItem.highlighted ? "#181818" : "transparent"
         }
     }
     Menu {

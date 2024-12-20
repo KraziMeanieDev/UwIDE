@@ -8,13 +8,13 @@ Rectangle {
     radius: 8
     SplitView.minimumWidth: 200
     SplitView.maximumWidth: 300
-    color: "#2b2b2b"
+    color: "#202020"
 
     Rectangle {
         id: sidePanelHeader
         height: 40
         width: parent.width
-        color: "#2b2b2b"
+        color: "#202020"
         topLeftRadius: parent.radius
         topRightRadius: parent.radius
         z: 2
