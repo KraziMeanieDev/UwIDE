@@ -34,14 +34,19 @@ void Explorer::updateFolderContents(const QString &folderPath) {
     return;
   }
 
-  QFileInfoList files =
-      directory.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot);
+  QFileInfoList files = directory.entryInfoList(
+      QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot, QDir::DirsFirst);
 
   m_folderContents.clear();
   for (const QFileInfo &fileInfo : files) {
     QVariantMap folderMap;
     folderMap["name"] = fileInfo.fileName();
     folderMap["path"] = fileInfo.absoluteFilePath();
+    if (fileInfo.isDir()) {
+      folderMap["isDirectory"] = true;
+    } else {
+      folderMap["isDirectory"] = false;
+    }
 
     m_folderContents.append(folderMap);
   }

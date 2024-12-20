@@ -17,9 +17,9 @@ Rectangle {
         interval: 150
         repeat: false
         onTriggered: {
-            editorPanel.lineCount = textEdit.text.split('\n').length
-            lineNumbersCanvas.requestPaint()
-            textEdit.updatesPending = false
+            editorPanel.lineCount = textEdit.text.split('\n').length;
+            lineNumbersCanvas.requestPaint();
+            textEdit.updatesPending = false;
         }
     }
 
@@ -54,6 +54,7 @@ Rectangle {
             width: 40
             height: flick.contentHeight
             color: "#232323"
+            topLeftRadius: editorPanel.radius
 
             Canvas {
                 id: lineNumbersCanvas
@@ -63,7 +64,7 @@ Rectangle {
                 onPaint: {
                     var ctx = getContext("2d");
                     ctx.reset();
-                    
+
                     ctx.font = textEdit.font.pixelSize + "px '" + textEdit.font.family + "'";
                     ctx.fillStyle = "#707070";
                     ctx.textAlign = "right";
@@ -108,20 +109,20 @@ Rectangle {
             clip: true
 
             // Rendering optimizations
-            renderType: Text.NativeRendering
-            antialiasing: false
-            layer.enabled: true
-            layer.smooth: false
+            // renderType: Text.NativeRendering
+            // antialiasing: true
+            // layer.enabled: true
+            // layer.smooth: true
             textFormat: TextEdit.PlainText
-            
+
             // Memory optimizations
             persistentSelection: false
             selectByMouse: true
-            mouseSelectionMode: TextEdit.SelectWords
-            
+            mouseSelectionMode: TextEdit.SelectCharacters
+
             // Batch updates
             property bool updatesPending: false
-            
+
             onTextChanged: {
                 if (!updatesPending) {
                     updatesPending = true;

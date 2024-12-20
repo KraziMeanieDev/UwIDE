@@ -4,6 +4,7 @@ cmake-build-*/
 out/
 _build/
 .cache
+performance.txt
 
 # Qt Creator user-specific settings
 *.user

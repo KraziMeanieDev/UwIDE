@@ -90,6 +90,9 @@ Rectangle {
                     onClicked: {
                         // Log the path of the clicked item (using modelData)
                         console.log("Item clicked:", modelData.path);
+                        if (modelData.isDirectory === true) {
+                            console.log(modelData.name + " is a directory");
+                        }
                         codeDocumentModel.loadDocumentChunk(modelData.path, 0, 1000);
                     }
                 }
