@@ -102,7 +102,7 @@ Rectangle {
             width: flick.width - lineNumbersArea.width
             height: contentHeight
             font.pointSize: 12
-            font.family: "JetBrains Mono"
+            font.family: "Iosevka Nerd Font Mono"
             color: "#cfcfcf"
             text: codeDocumentModel.codeDocument
             wrapMode: TextEdit.NoWrap

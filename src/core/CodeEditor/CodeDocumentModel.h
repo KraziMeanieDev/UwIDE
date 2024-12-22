@@ -3,19 +3,19 @@
 #include <QString>
 
 class CodeDocumentModel : public QObject {
-  Q_OBJECT
-  Q_PROPERTY(QString codeDocument READ codeDocument NOTIFY codeDocumentChanged)
+    Q_OBJECT
+    Q_PROPERTY(QString codeDocument READ codeDocument NOTIFY codeDocumentChanged)
 
 public:
-  explicit CodeDocumentModel(QObject *parent = nullptr);
+    explicit CodeDocumentModel(QObject *parent = nullptr);
 
-  QString codeDocument() const;
+    QString codeDocument() const;
 
-  Q_INVOKABLE void loadDocumentChunk(const QString &folderPath, int startLine,
-                                     int lineCount);
+    Q_INVOKABLE void loadDocumentChunk(const QString &folderPath, int startLine,
+        int lineCount);
 signals:
-  void codeDocumentChanged();
+    void codeDocumentChanged();
 
 private:
-  QString m_codeDocument;
+    QString m_codeDocument;
 };

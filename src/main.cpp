@@ -5,33 +5,34 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 
-int main(int argc, char *argv[]) {
-  QGuiApplication app(argc, argv);
+int main(int argc, char *argv[])
+{
+    QGuiApplication app(argc, argv);
 
-  MenuController menuController;
-  Explorer explorer;
-  CodeDocumentModel codeDocumentModel;
+    MenuController menuController;
+    Explorer explorer;
+    CodeDocumentModel codeDocumentModel;
 
-  QObject::connect(&menuController, &MenuController::openFolderRequested,
-                   &explorer, &Explorer::browseFolder);
+    QObject::connect(&menuController, &MenuController::openFolderRequested,
+        &explorer, &Explorer::browseFolder);
 
-  QQmlApplicationEngine engine;
+    QQmlApplicationEngine engine;
 
-  engine.rootContext()->setContextProperty("menuController", &menuController);
-  engine.rootContext()->setContextProperty("explorer", &explorer);
-  engine.rootContext()->setContextProperty("codeDocumentModel",
-                                           &codeDocumentModel);
+    engine.rootContext()->setContextProperty("menuController", &menuController);
+    engine.rootContext()->setContextProperty("explorer", &explorer);
+    engine.rootContext()->setContextProperty("codeDocumentModel",
+        &codeDocumentModel);
 
-  using namespace Qt::StringLiterals;
-  const QUrl url(u"qrc:/src/main.qml"_s);
-  QObject::connect(
-      &engine, &QQmlApplicationEngine::objectCreated, &app,
-      [url](QObject *obj, const QUrl &objUrl) {
-        if (!obj && url == objUrl)
-          QCoreApplication::exit(-1);
-      },
-      Qt::QueuedConnection);
-  engine.load(url);
+    using namespace Qt::StringLiterals;
+    const QUrl url(u"qrc:/src/main.qml"_s);
+    QObject::connect(
+        &engine, &QQmlApplicationEngine::objectCreated, &app,
+        [url](QObject *obj, const QUrl &objUrl) {
+            if (!obj && url == objUrl)
+                QCoreApplication::exit(-1);
+        },
+        Qt::QueuedConnection);
+    engine.load(url);
 
-  return app.exec();
+    return app.exec();
 }

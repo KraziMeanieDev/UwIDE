@@ -2,12 +2,12 @@
 #include <QObject>
 
 class MenuController : public QObject {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  explicit MenuController(QObject *parent = nullptr);
+    explicit MenuController(QObject *parent = nullptr);
 signals:
-  void openFolderRequested(const QString &folderPath);
+    void openFolderRequested(const QString &folderPath);
 public slots:
-  void handleMenuAction(const QString &actionName);
+    void handleMenuAction(const QString &actionName);
 };
