@@ -1,14 +1,16 @@
 import QtQuick
 import QtQuick.Controls.Fusion
 
-// import QtQuick.Layouts
-
 Rectangle {
     id: sidePanel
     radius: 8
     SplitView.minimumWidth: 200
     SplitView.maximumWidth: 300
     color: "#202020"
+
+    Component.onCompleted: {
+        console.log("TreeView initialized with model:", explorerModel);
+    }
 
     Rectangle {
         id: sidePanelHeader
@@ -37,12 +39,13 @@ Rectangle {
         color: "#323232"
     }
 
-    ListView {
-        id: list
+    TreeView {
+        id: fileSystemView
         anchors.top: sidePanelSeparator.bottom
         width: parent.width
         height: parent.height - sidePanelHeader.height
-        model: explorer.folderContents
+        clip: true
+        model: explorerModel
         boundsBehavior: Flickable.StopAtBounds
 
         ScrollBar.vertical: ScrollBar {
@@ -55,56 +58,67 @@ Rectangle {
             }
         }
 
-        populate: Transition {
-            NumberAnimation {
-                property: "opacity"
-                from: 0
-                to: 1
-                duration: 200
+        delegate: Rectangle {
+            id: treeDelegate
+            required property bool expanded
+            required property int hasChildren
+            required property int depth
+            required property var model
+
+            implicitWidth: fileSystemView.width
+            implicitHeight: 30
+            color: mouse.hovered ? "#303030" : "transparent"
+
+            HoverHandler {
+                id: mouse
+                acceptedDevices: PointerDevice.Mouse
+                cursorShape: Qt.PointingHandCursor
             }
-        }
 
-        delegate: Item {
-            width: ListView.view.width
-            height: 30
-
-            Rectangle {
-                width: parent.width
-                height: 30
-                color: mouse.hovered ? "#333333" : "transparent"
-                // topLeftRadius: (index === 0) ? sidePanel.radius : 0
-                // topRightRadius: (index === 0) ? sidePanel.radius : 0
-                bottomRightRadius: (index === explorer.folderContents.length - 1) ? sidePanel.radius : 0
-                bottomLeftRadius: (index === explorer.folderContents.length - 1) ? sidePanel.radius : 0
-
-                HoverHandler {
-                    id: mouse
-                    acceptedDevices: PointerDevice.Mouse
-                    cursorShape: Qt.PointingHandCursor
-                }
-                MouseArea {
-                    id: mouseArea
-                    anchors.fill: parent
-                    cursorShape: Qt.PointingHandCursor
-
-                    onClicked: {
-                        // Log the path of the clicked item (using modelData)
-                        console.log("Item clicked:", modelData.path);
-                        if (modelData.isDirectory === true) {
-                            console.log(modelData.name + " is a directory");
-                        }
-                        codeDocumentModel.loadDocumentChunk(modelData.path, 0, 1000);
+            MouseArea {
+                id: mouseArea
+                anchors.fill: parent
+                onClicked: {
+                    console.log("Item clicked:", model.path);
+                    if (model.isDirectory) {
+                        console.log(model.name + " is a directory");
+                    } else {
+                        codeDocumentModel.loadDocumentChunk(model.path, 0, 1000);
                     }
+                    // if (hasChildren) {
+                    //     fileSystemView.toggleExpanded(row);
+                    // }
+                }
+            }
+
+            Row {
+                spacing: 4
+                x: depth * 12
+                anchors.verticalCenter: parent.verticalCenter
+
+                Text {
+                    text: hasChildren ? (expanded ? "▼" : "▶") : ""
+                    color: "#cfcfcf"
+                    font.pointSize: 8
+                    visible: hasChildren
+                    anchors.verticalCenter: parent.verticalCenter
                 }
 
                 Text {
-                    anchors.left: parent.left
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: modelData.name
+                    text: model ? model.name : ""
                     color: "#cfcfcf"
+                    anchors.verticalCenter: parent.verticalCenter
                     leftPadding: 15
                 }
             }
         }
     }
 }
+
+// Connections {
+//     target: explorerModel
+//     function onRootPathChanged() {
+//         console.log("Root path changed in TreeView");
+//         fileSystemView.forceLayout();
+//     }
+// }

@@ -36,11 +36,7 @@ ApplicationWindow {
         currentFolder: ""
         onAccepted: {
             console.log("Selected folder:", folderDialog.selectedFolder);
-            explorer.browseFolder(folderDialog.selectedFolder);
-            for (var i = 0; i < explorer.folderContents.length; i++) {
-                var folder = explorer.folderContents[i];
-                console.log("Item " + i + ": Name: " + folder.name + ", Path: " + folder.path);
-            }
+            explorerModel.browseFolder(folderDialog.selectedFolder);
         }
     }
 
@@ -101,11 +97,4 @@ ApplicationWindow {
             }
         }
     }
-
-    // Text {
-    //     anchors.centerIn: parent
-    //     text: "Hello, World"
-    //     font.pointSize: 50
-    //     font.family: "JetBrains Mono"
-    // }
 }

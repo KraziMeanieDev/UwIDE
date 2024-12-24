@@ -28,7 +28,13 @@ MenuBar {
             radius: 4
             anchors.margins: 10
             opacity: enabled ? 1 : 0.3
-            color: menuBarItem.highlighted ? "#181818" : "transparent"
+            color: menuBarItem.highlighted ? "#2a2a2a" : "transparent"
+
+            // Behavior on color {
+            //     ColorAnimation {
+            //         duration: 100
+            //     }
+            // }
         }
     }
     Menu {
