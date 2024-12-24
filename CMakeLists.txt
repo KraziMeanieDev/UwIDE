@@ -25,16 +25,16 @@ qt_standard_project_setup()
 # List of source files
 set(SOURCES
     src/main.cpp
-    src/core/Explorer.cpp
     src/core/MenuController.cpp
     src/core/CodeEditor/CodeDocumentModel.cpp
+    src/core/Explorer/ExplorerListModel.cpp
 )
 
 # List of header files
 set(HEADERS
-    src/core/Explorer.h
     src/core/MenuController.h
     src/core/CodeEditor/CodeDocumentModel.h
+    src/core/Explorer/ExplorerListModel.h
 )
 
 # Define the executable

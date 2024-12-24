@@ -1,5 +1,5 @@
 #include "core/CodeEditor/CodeDocumentModel.h"
-#include "core/Explorer.h"
+#include "core/Explorer/ExplorerListModel.h"
 #include "core/MenuController.h"
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
@@ -10,18 +10,17 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     MenuController menuController;
-    Explorer explorer;
     CodeDocumentModel codeDocumentModel;
+    ExplorerListModel explorerModel("");
 
-    QObject::connect(&menuController, &MenuController::openFolderRequested,
-        &explorer, &Explorer::browseFolder);
+    QObject::connect(&menuController, &MenuController::openFolderRequested, &explorerModel,
+                     &ExplorerListModel::browseFolder);
 
     QQmlApplicationEngine engine;
 
     engine.rootContext()->setContextProperty("menuController", &menuController);
-    engine.rootContext()->setContextProperty("explorer", &explorer);
-    engine.rootContext()->setContextProperty("codeDocumentModel",
-        &codeDocumentModel);
+    engine.rootContext()->setContextProperty("codeDocumentModel", &codeDocumentModel);
+    engine.rootContext()->setContextProperty("explorerModel", &explorerModel);
 
     using namespace Qt::StringLiterals;
     const QUrl url(u"qrc:/src/main.qml"_s);
