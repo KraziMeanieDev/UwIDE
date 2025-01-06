@@ -2,7 +2,7 @@
   import ConsolePanel from "../components/ConsolePanel.svelte";
   import EditorPanel from "../components/EditorPanel.svelte";
   import ExplorerPanel from "../components/ExplorerPanel.svelte";
-  import MenuBar from "../components/MenuBar.svelte";
+  import MenuBar from "../components/MenuBar/MenuBar.svelte";
 </script>
 
 <main class="container">
