@@ -7,6 +7,7 @@
         createVitesseDarkTheme,
         vitesseDark,
     } from "codemirror-theme-vitesse";
+    import { editorViewStore } from "../utils/fs";
 
     const vitesseDarkCustom = createVitesseDarkTheme({
         settings: {
@@ -16,11 +17,10 @@
             gutterActiveForeground: "#bfbaaa",
         },
     });
-
+    //@ts-ignore
+    export let editorView;
     // @ts-ignore
-    let editorView;
-    // @ts-ignore
-    let editorElement;
+    export let editorElement;
 
     onMount(() => {
         const customTheme = EditorView.theme({
@@ -44,16 +44,19 @@
                     customTheme,
                     EditorView.lineWrapping,
                 ],
-                doc: `#include <iostream>\n\nint main() {\n    std::cout << "Hello, World!" << std::endl;\n    return 0;\n}`,
+                doc: "",
             }),
             // @ts-ignore
             parent: editorElement,
         });
 
+        editorViewStore.set(editorView);
+
         // Cleanup on component destruction
         return () => {
             // @ts-ignore
             editorView.destroy();
+            editorViewStore.set(null);
         };
     });
 </script>

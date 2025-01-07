@@ -1,17 +1,30 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { currentFolderItems } from "../utils/fs";
+    import { currentFolderItems, loadFile } from "../utils/fs";
 
     onMount(() => {
         console.log($currentFolderItems);
     });
+
+    function handleFolderSelect(path: String) {}
+
+    async function handleFileSelect(path: string) {
+        await loadFile(path);
+    }
 </script>
 
 <div class="container">
     <div class="header">Explorer</div>
     <div class="entry-list">
         {#each $currentFolderItems as entry}
-            <span class="entry-name">{entry.name}</span>
+            <!-- svelte-ignore a11y_click_events_have_key_events -->
+            <!-- svelte-ignore a11y_no_static_element_interactions -->
+            <span
+                class="entry-name"
+                on:click={entry.isDirectory
+                    ? () => handleFolderSelect(entry.path)
+                    : () => handleFileSelect(entry.path)}>{entry.name}</span
+            >
         {/each}
     </div>
 </div>

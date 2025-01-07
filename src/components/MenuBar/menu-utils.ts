@@ -1,7 +1,7 @@
 // Utilities for interacting with the MenuBar
 
 import { open } from "@tauri-apps/plugin-dialog";
-import { loadFolder } from "../../utils/fs";
+import { loadFile, loadFolder } from "../../utils/fs";
 
 export let menuItems = [
   {
@@ -30,18 +30,24 @@ export let menuItems = [
 ];
 
 export async function handleNew() {
-  console.log("New clicked")
+  const filePath = await open({
+    filters: [{ name: "Cpp Files", extensions: ["cpp"] }],
+  });
+  if (filePath) {
+    await loadFile(filePath);
+  }
+  console.log(filePath);
 }
 
 export async function handleOpen() {
-  const folder = await open({
+  const folderPath = await open({
     multiple: false,
     directory: true
   });
-  if (folder) {
-    loadFolder(folder);
+  if (folderPath) {
+    loadFolder(folderPath);
   }
-  console.log("Open clicked", folder);
+  console.log("Open clicked", folderPath);
 }
 
 export async function handleSave() {

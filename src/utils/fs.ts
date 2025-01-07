@@ -1,7 +1,9 @@
 // Utility functions for interacting with the file system
 
 import { join } from "@tauri-apps/api/path";
-import { readDir, type DirEntry } from "@tauri-apps/plugin-fs";
+import { open } from "@tauri-apps/plugin-dialog";
+import { readDir, readTextFile, type DirEntry } from "@tauri-apps/plugin-fs";
+import type { EditorView } from "codemirror";
 import { writable, type Writable } from "svelte/store";
 
 export interface DirEntriesWithPath extends DirEntry {
@@ -41,5 +43,28 @@ export async function loadFolder(folderPath: string) {
     } else {
         return [];
         console.log("User cancelled the folder selection.");
+    }
+}
+
+export const editorViewStore: Writable<EditorView> = writable();
+
+export async function loadFile(filePath: string) {
+    if (filePath) {
+        try {
+            const result = await readTextFile(filePath);
+            editorViewStore.subscribe((editorView) => {
+                if (editorView) {
+                    // Example: Update the document content
+                    editorView.dispatch({
+                        changes: { from: 0, to: editorView.state.doc.length, insert: result },
+                    });
+                }
+            });
+        } catch (error) {
+            console.error("Error reading file", error);
+        }
+    } else {
+        return "";
+        console.log("User cancelled reading the file");
     }
 }
