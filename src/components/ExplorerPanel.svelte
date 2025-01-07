@@ -11,19 +11,34 @@
     async function handleFileSelect(path: string) {
         await loadFile(path);
     }
+
+    function handleSelectEntry(event: MouseEvent) {
+        const target = event.target as HTMLElement;
+        if (target.classList.contains("entry-name")) {
+            const path = target.getAttribute("data-path");
+            if (path) {
+                const isDirectory =
+                    target.getAttribute("data.isDirectory") === "true";
+                if (isDirectory) {
+                    handleFolderSelect(path);
+                } else {
+                    handleFileSelect(path);
+                }
+            }
+        }
+    }
 </script>
 
 <div class="container">
     <div class="header">Explorer</div>
-    <div class="entry-list">
+    <!-- svelte-ignore a11y_click_events_have_key_events -->
+    <!-- svelte-ignore a11y_no_static_element_interactions -->
+    <div class="entry-list" on:click={handleSelectEntry}>
         {#each $currentFolderItems as entry}
-            <!-- svelte-ignore a11y_click_events_have_key_events -->
-            <!-- svelte-ignore a11y_no_static_element_interactions -->
             <span
                 class="entry-name"
-                on:click={entry.isDirectory
-                    ? () => handleFolderSelect(entry.path)
-                    : () => handleFileSelect(entry.path)}>{entry.name}</span
+                data-path={entry.path}
+                data-isDirectory={entry.isDirectory}>{entry.name}</span
             >
         {/each}
     </div>
