@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import { onMount } from "svelte";
     import { EditorView, basicSetup } from "codemirror";
     import { EditorState } from "@codemirror/state";
@@ -17,10 +17,9 @@
             gutterActiveForeground: "#bfbaaa",
         },
     });
-    //@ts-ignore
-    export let editorView;
-    // @ts-ignore
-    export let editorElement;
+
+    export let editorView: EditorView;
+    export let editorElement: Element | DocumentFragment;
 
     onMount(() => {
         const customTheme = EditorView.theme({
@@ -46,14 +45,13 @@
                 ],
                 doc: "",
             }),
-            // @ts-ignore
+
             parent: editorElement,
         });
 
         editorViewStore.set(editorView);
 
         return () => {
-            // @ts-ignore
             editorView.destroy();
         };
     });
