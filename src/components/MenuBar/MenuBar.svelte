@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { menuItems } from "./menu-data";
+  import { menuItems } from "./menu-utils";
   let activeMenu: string | null = null;
 
   function toggleMenu(label: string) {

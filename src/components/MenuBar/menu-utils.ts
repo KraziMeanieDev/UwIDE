@@ -1,72 +1,79 @@
-import { invoke } from "@tauri-apps/api/core";
-import { join } from "@tauri-apps/api/path";
+// Utilities for interacting with the MenuBar
+
 import { open } from "@tauri-apps/plugin-dialog";
-import { readDir } from "@tauri-apps/plugin-fs";
+import { loadFolder } from "../../utils/fs";
+
+export let menuItems = [
+  {
+    label: "File",
+    submenu: [
+      { label: "New", action: () => handleNew() },
+      { label: "Open", action: () => handleOpen() },
+      { label: "Save", action: () => handleSave() },
+      { label: "Exit", action: () => handleExit() },
+    ],
+  },
+  {
+    label: "Edit",
+    submenu: [
+      { label: "Undo", action: () => handleUndo() },
+      { label: "Redo", action: () => handleRedo() },
+      { label: "Cut", action: () => handleCut() },
+      { label: "Copy", action: () => handleCopy() },
+      { label: "Paste", action: () => handlePaste() },
+    ],
+  },
+  {
+    label: "Help",
+    submenu: [{ label: "About", action: () => handleAbout() }],
+  },
+];
 
 export async function handleNew() {
-  await invoke("create_new_file");
+  console.log("New clicked")
 }
 
 export async function handleOpen() {
   const folder = await open({
     multiple: false,
-    directory: true,
+    directory: true
   });
-
   if (folder) {
-    // Check if folder is not null
-    try {
-      const entries = await readDir(folder);
-
-      const children = await Promise.all(
-        entries.map(async (entry) => {
-          const fullPath = await join(folder, entry.name);
-          return {
-            ...entry,
-            path: fullPath,
-          };
-        }),
-      );
-      console.log("Open clicked", children);
-    } catch (error) {
-      console.error("Error reading directory:", error);
-      // Handle the error appropriately, e.g., display an error message to the user
-    }
-  } else {
-    console.log("User cancelled the folder selection.");
+    loadFolder(folder);
   }
+  console.log("Open clicked", folder);
 }
 
-export function handleSave() {
+export async function handleSave() {
   console.log("Save clicked");
 }
 
-export function handleExit() {
+export async function handleExit() {
   console.log("Exit clicked");
 }
 
-// Functions for Edit menu
-export function handleUndo() {
+
+export async function handleUndo() {
   console.log("Undo clicked");
 }
 
-export function handleRedo() {
+export async function handleRedo() {
   console.log("Redo clicked");
 }
 
-export function handleCut() {
+export async function handleCut() {
   console.log("Cut clicked");
 }
 
-export function handleCopy() {
+export async function handleCopy() {
   console.log("Copy clicked");
 }
 
-export function handlePaste() {
+export async function handlePaste() {
   console.log("Paste clicked");
 }
 
 // Functions for Help menu
-export function handleAbout() {
+export async function handleAbout() {
   console.log("About clicked");
 }
