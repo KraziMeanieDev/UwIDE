@@ -38,8 +38,8 @@
         editorView = new EditorView({
             state: EditorState.create({
                 extensions: [
-                    basicSetup, // Basic editor setup (line numbers, etc.)
-                    cpp(), // C++ syntax highlighting
+                    basicSetup,
+                    cpp(),
                     vitesseDarkCustom,
                     customTheme,
                     EditorView.lineWrapping,
@@ -52,11 +52,9 @@
 
         editorViewStore.set(editorView);
 
-        // Cleanup on component destruction
         return () => {
             // @ts-ignore
             editorView.destroy();
-            editorViewStore.set(null);
         };
     });
 </script>
@@ -67,7 +65,6 @@
     @font-face {
         font-family: "Iosevka";
         src: url("/fonts/Iosevka-Regular.ttf") format("truetype");
-        /* Add other formats if needed, e.g., woff2 */
         font-weight: normal;
         font-style: normal;
     }

@@ -64,9 +64,9 @@
         background-color: #2a2a2a;
     }
     .entry-name {
-        white-space: nowrap; /* Prevent text from wrapping */
-        overflow: hidden; /* Hide overflow content */
-        text-overflow: ellipsis; /* Add ... at the end */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         display: inline-block;
     }
 </style>
