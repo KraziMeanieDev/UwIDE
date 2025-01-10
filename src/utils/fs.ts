@@ -4,6 +4,7 @@ import { open } from "@tauri-apps/plugin-dialog";
 import { readDir, readTextFile, type DirEntry } from "@tauri-apps/plugin-fs";
 import type { EditorView } from "codemirror";
 import { writable, type Writable, get } from "svelte/store";
+import { addTab } from "../components/EditorPanel/editor_tabs-utils";
 
 export interface DirEntriesWithPath extends DirEntry {
     path: string;
@@ -53,13 +54,7 @@ export async function loadFile(filePath: string) {
     }
 
     try {
-        const result = await readTextFile(filePath);
-        const editorView = get(editorViewStore);
-        if (editorView) {
-            editorView.dispatch({
-                changes: { from: 0, to: editorView.state.doc.length, insert: result },
-            });
-        }
+        addTab(filePath);
     } catch (error) {
         console.error("Error reading file", error);
     }
