@@ -3,7 +3,7 @@
     import { currentFolderItems, loadFile } from "../utils/fs";
 
     onMount(() => {
-        console.log($currentFolderItems);
+        console.log("Current Folder List", $currentFolderItems);
     });
 
     function handleFolderSelect(path: String) {}

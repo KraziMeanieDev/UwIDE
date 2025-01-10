@@ -1,6 +1,6 @@
 <script lang="ts">
   import ConsolePanel from "../components/ConsolePanel.svelte";
-  import EditorPanel from "../components/EditorPanel.svelte";
+  import EditorPanel from "../components/EditorPanel/EditorPanel.svelte";
   import ExplorerPanel from "../components/ExplorerPanel.svelte";
   import MenuBar from "../components/MenuBar/MenuBar.svelte";
 </script>
@@ -11,7 +11,7 @@
     <ExplorerPanel />
     <div class="nested-layout">
       <EditorPanel />
-      <ConsolePanel />
+      <!-- <ConsolePanel /> -->
     </div>
   </div>
 </main>
@@ -38,22 +38,23 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
-    overflow: hidden;
+    box-sizing: border-box;
   }
 
   .parent-layout {
     display: flex;
-    width: 100%;
-    height: 100%;
+    flex-grow: 1;
     gap: 5px;
+    overflow: hidden;
   }
 
   .nested-layout {
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
     width: 100%;
     gap: 5px;
-    overflow: auto;
+    overflow: hidden;
   }
 
   @media (prefers-color-scheme: dark) {
