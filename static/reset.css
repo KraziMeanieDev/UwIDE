@@ -17,22 +17,27 @@ Use a better box model (opinionated).
 
 /* width */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 7px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #373737;
+  border-radius: 8px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+/*  padding-right: 4px;*/
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background: #555;
+  border-radius: 8px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: #888;
 }
 
 html {

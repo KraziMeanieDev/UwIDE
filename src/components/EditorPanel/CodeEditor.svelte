@@ -39,5 +39,6 @@
         scroll-behavior: smooth;
         flex-grow: 1;
         overflow-y: auto;
+        margin-right: 4px;
     }
 </style>
