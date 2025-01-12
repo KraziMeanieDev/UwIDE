@@ -18,6 +18,7 @@ Use a better box model (opinionated).
 /* width */
 ::-webkit-scrollbar {
   width: 7px;
+  height: 6px;
 }
 
 /* Track */
