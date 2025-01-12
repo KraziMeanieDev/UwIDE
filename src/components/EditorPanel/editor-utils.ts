@@ -28,7 +28,6 @@ const customEditorTheme = EditorView.theme({
     },
 });
 
-// No need to export this if it's only used as a template
 const createBaseEditorState = (doc = "") => EditorState.create({
     extensions: [
         basicSetup,
@@ -39,11 +38,6 @@ const createBaseEditorState = (doc = "") => EditorState.create({
     ],
     doc: doc,
 });
-
-// You might not need this exported anymore
-// export const initialEditorView: EditorView = new EditorView({
-//     state: createBaseEditorState(),
-// });
 
 export function createInitialEditorView(): EditorView {
     return new EditorView({ state: createBaseEditorState() });
@@ -57,7 +51,6 @@ export async function createNewEditorView(filePath: string): Promise<EditorView 
         });
     } catch (error) {
         console.error("Error reading file:", error);
-        // Optionally return null or a special error EditorView
         return null;
     }
 }

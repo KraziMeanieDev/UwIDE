@@ -1,6 +1,9 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import { currentFolderItems, loadFile } from "../utils/fs";
+    import { fade } from "svelte/transition";
+    import { extname } from "@tauri-apps/api/path";
+    import { CppIcon, FileIcon, FolderIcon } from "./icons";
 
     onMount(() => {
         console.log("Current Folder List", $currentFolderItems);
@@ -38,8 +41,33 @@
             <span
                 class="entry-name"
                 data-path={entry.path}
-                data-isDirectory={entry.isDirectory}>{entry.name}</span
+                data-isDirectory={entry.isDirectory}
+                transition:fade={{ duration: 300 }}
             >
+                {#if entry.isDirectory}
+                    <img
+                        src={FolderIcon}
+                        alt="Folder Icon"
+                        width="20px"
+                        style="margin-right: 3px;"
+                    />
+                {:else if entry.ext !== "cpp"}
+                    <img
+                        src={FileIcon}
+                        alt="Cpp Icon"
+                        width="20px"
+                        style="margin-right: 3px;"
+                    />
+                {:else}
+                    <img
+                        src={CppIcon}
+                        alt="File Icon"
+                        width="20px"
+                        style="margin-right: 3px;"
+                    />
+                {/if}
+                {entry.name}
+            </span>
         {/each}
     </div>
 </div>

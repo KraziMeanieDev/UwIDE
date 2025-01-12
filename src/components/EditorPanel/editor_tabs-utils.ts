@@ -21,7 +21,6 @@ const initialTab: Tab = {
 export const editorTabs: Writable<Tab[]> = writable([initialTab]);
 export const activeTabId: Writable<string> = writable(initialTab.id);
 
-// And in addTab:
 export async function addTab(path: string) {
     const existingTabs = get(editorTabs);
     const tabAlreadyOpened = existingTabs.find(tab => tab.path === path);
@@ -44,7 +43,6 @@ export async function addTab(path: string) {
             return [...tabs, newTab];
         });
     } else {
-        // Handle the error case, perhaps show a notification to the user
         console.error("Failed to create editor for:", path);
     }
 }

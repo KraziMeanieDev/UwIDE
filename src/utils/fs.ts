@@ -1,16 +1,17 @@
 // fs.ts
-import { join } from "@tauri-apps/api/path";
+import { extname, join } from "@tauri-apps/api/path";
 import { open } from "@tauri-apps/plugin-dialog";
 import { readDir, readTextFile, type DirEntry } from "@tauri-apps/plugin-fs";
 import type { EditorView } from "codemirror";
 import { writable, type Writable, get } from "svelte/store";
 import { addTab } from "../components/EditorPanel/editor_tabs-utils";
 
-export interface DirEntriesWithPath extends DirEntry {
+export interface DirEntriesWithPathAndExt extends DirEntry {
     path: string;
+    ext: string;
 }
 
-export const currentFolderItems: Writable<DirEntriesWithPath[]> = writable([]);
+export const currentFolderItems: Writable<DirEntriesWithPathAndExt[]> = writable([]);
 
 export async function loadFolder(folderPath: string) {
     if (!folderPath) {
@@ -24,14 +25,16 @@ export async function loadFolder(folderPath: string) {
         const folderEntries = await Promise.all(
             results.map(async (entry) => {
                 const fullPath = await join(folderPath, entry.name);
+                const extName = await extname(fullPath);
                 return {
                     ...entry,
                     path: fullPath,
+                    ext: extName
                 };
             }),
         );
         currentFolderItems.set(
-            folderEntries.sort((a: DirEntriesWithPath, b: DirEntriesWithPath) => {
+            folderEntries.sort((a: DirEntriesWithPathAndExt, b: DirEntriesWithPathAndExt) => {
                 if (a.isDirectory && !b.isDirectory) {
                     return -1;
                 } else if (!a.isDirectory && b.isDirectory) {
