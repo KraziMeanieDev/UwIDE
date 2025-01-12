@@ -1,6 +1,12 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import { currentFolderItems, loadFile } from "../utils/fs";
+    import FolderIcon from "../assets/folder.svg";
+    import FileIcon from "../assets/file.svg";
+    import CppIcon from "../assets/cpp.svg";
+    // import { extname } from "tauri-plugin-fs-pro-api";
+    import { fade } from "svelte/transition";
+    import { extname } from "@tauri-apps/api/path";
 
     onMount(() => {
         console.log("Current Folder List", $currentFolderItems);
@@ -10,6 +16,11 @@
 
     async function handleFileSelect(path: string) {
         await loadFile(path);
+    }
+
+    async function getFileExtension(path: string) {
+        const fileExtName = await extname(path);
+        return fileExtName;
     }
 
     function handleSelectEntry(event: MouseEvent) {
@@ -38,8 +49,37 @@
             <span
                 class="entry-name"
                 data-path={entry.path}
-                data-isDirectory={entry.isDirectory}>{entry.name}</span
+                data-isDirectory={entry.isDirectory}
+                transition:fade={{ duration: 300 }}
             >
+                {#if entry.isDirectory}
+                    <img
+                        src={FolderIcon}
+                        alt="Folder Icon"
+                        width="20px"
+                        style="margin-right: 3px;"
+                    />
+                {:else}
+                    {#await getFileExtension(entry.path) then extName}
+                        {#if extName !== "cpp"}
+                            <img
+                                src={FileIcon}
+                                alt="Cpp Icon"
+                                width="20px"
+                                style="margin-right: 3px;"
+                            />
+                        {:else}
+                            <img
+                                src={CppIcon}
+                                alt="File Icon"
+                                width="20px"
+                                style="margin-right: 3px;"
+                            />
+                        {/if}
+                    {/await}
+                {/if}
+                {entry.name}
+            </span>
         {/each}
     </div>
 </div>

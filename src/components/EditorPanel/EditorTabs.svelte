@@ -2,6 +2,7 @@
     import { editorTabs, activeTabId, removeTab } from "./editor_tabs-utils";
     import { slide } from "svelte/transition";
     import XMarkIcon from "../../assets/xmark.svg";
+    import CppIcon from "../../assets/cpp.svg";
 
     async function handleCloseTab(tabId: string, activeTabId: string) {
         await removeTab(tabId, activeTabId);
@@ -22,10 +23,14 @@
             transition:slide={{ duration: 200 }}
             on:click={() => handleSetActiveTabOnClick(tab.id)}
         >
-            <span class="tab-title">{tab.title}</span>
+            <img src={CppIcon} alt="Cpp Logo Icon" width="20px" />
+            <span class="tab-title">
+                {tab.title}
+            </span>
             <button
                 class="tab-close-button"
-                on:click={() => handleCloseTab(tab.id, $activeTabId)}
+                on:click|stopPropagation={() =>
+                    handleCloseTab(tab.id, $activeTabId)}
             >
                 <img src={XMarkIcon} alt="Tab Close Button" width="16px" />
             </button>
@@ -35,15 +40,15 @@
 
 <style>
     .editor-tab-list {
-        background-color: #181818;
         display: flex;
         position: sticky;
         font-size: 0.9rem;
+        overflow-x: auto;
     }
     .editor-tab {
         display: flex;
         height: 35px;
-        width: 150px;
+        min-width: 200px;
         justify-content: space-between;
         align-items: center;
         padding-left: 10px;
